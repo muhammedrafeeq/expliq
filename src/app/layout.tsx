@@ -35,6 +35,9 @@ export const metadata: Metadata = {
   },
   description: "India's go-to source for technology tutorials, career tips, AI tools, device reviews, and student earnings.",
   keywords: ['technology tutorials', 'AI tools India', 'career tips', 'tech news India', 'student earning', 'device reviews'],
+  verification: {
+    google: 'ERmO5oDCJiHpk-7G8QIJiONsrCRyXsJFd-9zi-zvRi8',
+  },
   authors: [{ name: 'Expliq', url: BASE_URL }],
   creator: 'Expliq',
   publisher: 'Expliq',
