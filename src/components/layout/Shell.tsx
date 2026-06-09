@@ -47,8 +47,8 @@ export function Shell({ children }: ShellProps) {
         setMenuOpen(false)
       }
     }
-    if (menuOpen) document.addEventListener('mousedown', handler)
-    return () => document.removeEventListener('mousedown', handler)
+    if (menuOpen) document.addEventListener('click', handler)
+    return () => document.removeEventListener('click', handler)
   }, [menuOpen])
 
   // Close menu on route change (deferred to avoid sync setState)
@@ -100,7 +100,7 @@ export function Shell({ children }: ShellProps) {
 
             {/* Menu Button */}
             <button
-              onClick={() => setMenuOpen(!menuOpen)}
+              onMouseDown={(e) => { e.stopPropagation(); setMenuOpen(v => !v) }}
               className={`flex items-center gap-2 px-3 py-2 rounded-full border transition-all duration-200 ${
                 menuOpen
                   ? 'bg-primary text-on-primary border-primary'
