@@ -25,7 +25,7 @@ const TUTORIALS = [
     slug: 'build-rest-api-nodejs',
     title: 'Build a REST API with Node.js & Express from Scratch',
     description: 'Learn how to design, build, and deploy a production-ready REST API with authentication, validation, and error handling.',
-    cover: 'https://images.unsplash.com/photo-1555066931-4365d14431b9?auto=format&fit=crop&w=800&q=80',
+    cover: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=800&q=80',
     category: 'Backend',
     icon: 'code',
     difficulty: 'Beginner',
