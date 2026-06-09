@@ -51,12 +51,14 @@ export function Shell({ children }: ShellProps) {
     return () => document.removeEventListener('click', handler)
   }, [menuOpen])
 
-  // Close menu on route change (deferred to avoid sync setState)
+  // Close menu on route change
+  const prevPathname = useRef(pathname)
   useEffect(() => {
-    if (!menuOpen) return
-    const id = window.setTimeout(() => setMenuOpen(false), 0)
-    return () => clearTimeout(id)
-  }, [pathname, menuOpen])
+    if (prevPathname.current !== pathname) {
+      prevPathname.current = pathname
+      setMenuOpen(false)
+    }
+  }, [pathname])
 
   const toggleTheme = () => {
     setTheme(prev => (prev === 'light' ? 'dark' : 'light'))
