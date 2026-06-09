@@ -34,9 +34,12 @@ export function BlockMenu({ onSelect }: BlockMenuProps) {
   ] as const
 
   return (
-    <div className={`absolute right-[-40px] top-1.5 z-30 ${isOpen ? 'block' : 'hidden group-hover:block'}`}>
+    <div
+      className={`absolute right-[-40px] top-1.5 z-30 ${isOpen ? 'block' : 'hidden group-hover:block'}`}
+      onMouseLeave={() => { if (!isOpen) {} /* keep hover natural */ }}
+    >
       <button
-        onClick={() => setIsOpen(!isOpen)}
+        onMouseDown={(e) => { e.preventDefault(); e.stopPropagation(); setIsOpen(v => !v) }}
         className="w-7 h-7 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-md hover:scale-105 transition-all"
         title="Insert block"
       >
@@ -44,31 +47,35 @@ export function BlockMenu({ onSelect }: BlockMenuProps) {
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2 bg-zinc-950 text-white rounded-lg shadow-2xl border border-zinc-800 p-2 w-52 flex flex-col gap-0.5 z-50">
-          {(['Text', 'Media', 'Advanced', 'Content'] as const).map(group => {
-            const items = menuItems.filter(i => i.group === group)
-            return (
-              <div key={group}>
-                <p className="text-[9px] text-zinc-500 font-bold uppercase tracking-widest px-2.5 py-1.5 mt-1">
-                  {group}
-                </p>
-                {items.map(item => {
-                  const IconComponent = item.icon
-                  return (
-                    <button
-                      key={item.type}
-                      onClick={() => { onSelect(item.type as BlockType); setIsOpen(false) }}
-                      className="flex items-center gap-2.5 w-full text-left px-2.5 py-1.5 rounded-lg text-sm text-zinc-300 hover:text-white hover:bg-zinc-800 transition-colors"
-                    >
-                      <IconComponent size={14} className="text-primary-fixed shrink-0" />
-                      <span>{item.label}</span>
-                    </button>
-                  )
-                })}
-              </div>
-            )
-          })}
-        </div>
+        <>
+          {/* backdrop to close on outside click */}
+          <div className="fixed inset-0 z-40" onMouseDown={() => setIsOpen(false)} />
+          <div className="absolute right-0 mt-2 bg-zinc-950 text-white rounded-lg shadow-2xl border border-zinc-800 p-2 w-52 flex flex-col gap-0.5 z-50">
+            {(['Text', 'Media', 'Advanced', 'Content'] as const).map(group => {
+              const items = menuItems.filter(i => i.group === group)
+              return (
+                <div key={group}>
+                  <p className="text-[9px] text-zinc-500 font-bold uppercase tracking-widest px-2.5 py-1.5 mt-1">
+                    {group}
+                  </p>
+                  {items.map(item => {
+                    const IconComponent = item.icon
+                    return (
+                      <button
+                        key={item.type}
+                        onMouseDown={(e) => { e.preventDefault(); onSelect(item.type as BlockType); setIsOpen(false) }}
+                        className="flex items-center gap-2.5 w-full text-left px-2.5 py-1.5 rounded-lg text-sm text-zinc-300 hover:text-white hover:bg-zinc-800 transition-colors"
+                      >
+                        <IconComponent size={14} className="text-primary-fixed shrink-0" />
+                        <span>{item.label}</span>
+                      </button>
+                    )
+                  })}
+                </div>
+              )
+            })}
+          </div>
+        </>
       )}
     </div>
   )
