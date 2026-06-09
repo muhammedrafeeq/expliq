@@ -116,7 +116,7 @@ export default async function PublisherDashboard() {
               </tr>
             </thead>
             <tbody className="divide-y divide-outline-variant bg-surface text-sm">
-              {articles.map((art) => (
+              {(articles ?? []).map((art) => (
                 <tr key={art.id} className="hover:bg-surface-container-low transition-colors">
                   <td className="px-6 py-4 font-bold text-on-surface line-clamp-1 max-w-xs">{art.title}</td>
                   <td className="px-6 py-4">

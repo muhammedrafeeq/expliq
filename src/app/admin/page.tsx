@@ -65,12 +65,12 @@ export default async function AdminPanel() {
         <div className="lg:col-span-2 space-y-5">
           <h3 className="font-serif font-bold text-lg text-on-surface flex items-center gap-2 border-b border-outline-variant pb-2">
             <FileCheck size={18} className="text-primary" />
-            <span>Pending Submissions ({pendingArticles.length})</span>
+            <span>Pending Submissions ({(pendingArticles ?? []).length})</span>
           </h3>
 
-          {pendingArticles.length > 0 ? (
+          {(pendingArticles ?? []).length > 0 ? (
             <div className="space-y-4">
-              {pendingArticles.map((art) => (
+              {(pendingArticles ?? []).map((art) => (
                 <div key={art.id} className="border border-outline-variant rounded-lg p-5 bg-surface-container-lowest space-y-4 shadow-sm">
                   <div className="flex justify-between items-center text-[10px] uppercase font-mono font-bold text-outline">
                     <span>{art.category_id?.name || 'AI Tools'}</span>
@@ -126,12 +126,12 @@ export default async function AdminPanel() {
         <div className="space-y-5">
           <h3 className="font-serif font-bold text-lg text-on-surface flex items-center gap-2 border-b border-outline-variant pb-2">
             <ShieldAlert size={18} className="text-secondary" />
-            <span>Payout Queue ({payoutRequests.length})</span>
+            <span>Payout Queue ({(payoutRequests ?? []).length})</span>
           </h3>
 
-          {payoutRequests.length > 0 ? (
+          {(payoutRequests ?? []).length > 0 ? (
             <div className="space-y-3">
-              {payoutRequests.map((req) => (
+              {(payoutRequests ?? []).map((req) => (
                 <div key={req.id} className="border border-outline-variant rounded-lg p-4 bg-surface-container-low space-y-2 text-xs">
                   <div className="flex justify-between font-bold text-on-surface">
                     <span>{req.publisher || 'Author'}</span>
