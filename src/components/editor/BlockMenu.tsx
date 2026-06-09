@@ -34,7 +34,7 @@ export function BlockMenu({ onSelect }: BlockMenuProps) {
   ] as const
 
   return (
-    <div className="absolute right-[-40px] top-1.5 hidden group-hover:block z-30">
+    <div className={`absolute right-[-40px] top-1.5 z-30 ${isOpen ? 'block' : 'hidden group-hover:block'}`}>
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="w-7 h-7 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-md hover:scale-105 transition-all"

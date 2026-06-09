@@ -25,7 +25,8 @@ export async function subscribeNewsletterAction(email: string, source: string = 
     })
 
   if (error) {
-    if (error.code === '23505') { // Unique constraint code
+    console.error('[newsletter] supabase error:', error)
+    if (error.code === '23505') {
       return { error: 'You are already subscribed to our newsletter!' }
     }
     return { error: 'Subscription failed. Please try again.' }
