@@ -17,7 +17,7 @@ const NAV_LINKS = [
   { label: 'Student Earning', href: '/student', image: 'https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=400&q=60', desc: 'Earn while studying' },
   { label: 'Tech News', href: '/tech-news', image: 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=400&q=60', desc: 'India tech digest' },
   { label: 'Tutorials', href: '/tutorials', image: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=400&q=60', desc: 'Step-by-step guides' },
-  { label: 'Tools', href: '/tools', image: 'https://images.unsplash.com/photo-1581092921461-7031e0e4a7f2?auto=format&fit=crop&w=400&q=60', desc: 'Interactive tools' },
+  { label: 'Tools', href: '/tools', image: 'https://images.unsplash.com/photo-1537432376769-00f5c2f4c8d2?auto=format&fit=crop&w=400&q=60', desc: 'Interactive tools' },
 ]
 
 export function Shell({ children }: ShellProps) {
