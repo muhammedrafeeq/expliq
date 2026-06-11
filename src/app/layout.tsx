@@ -38,6 +38,9 @@ export const metadata: Metadata = {
   verification: {
     google: 'ERmO5oDCJiHpk-7G8QIJiONsrCRyXsJFd-9zi-zvRi8',
   },
+  other: {
+    'google-adsense-account': 'ca-pub-3775560788605769',
+  },
   authors: [{ name: 'Expliq', url: BASE_URL }],
   creator: 'Expliq',
   publisher: 'Expliq',
