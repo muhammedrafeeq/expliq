@@ -7,7 +7,9 @@ import { ShareButtons } from './ShareButtons'
 import { TableOfContents } from './TableOfContents'
 import { AuthorCard } from './AuthorCard'
 import { NewsletterForm } from '@/components/layout/NewsletterForm'
-import { Clock, Calendar, ChevronRight, ArrowUpRight } from 'lucide-react'
+import { Reactions } from './Reactions'
+import { LiveReaders } from './LiveReaders'
+import { Clock, Calendar, ChevronRight, ArrowUpRight, Zap } from 'lucide-react'
 import Link from 'next/link'
 import type { Metadata } from 'next'
 
@@ -189,6 +191,7 @@ export default async function ArticlePage({ params }: PageProps) {
 
     if (data) {
       article = {
+        id: data.id,
         title: data.title,
         excerpt: data.excerpt,
         cover_image_url: data.cover_image_url || 'https://images.unsplash.com/photo-1457369804613-52c61a468e7d',
@@ -294,6 +297,13 @@ export default async function ArticlePage({ params }: PageProps) {
     }
   }
 
+  function getDifficultyBadge(mins: number): { label: string; className: string } {
+    if (mins <= 4) return { label: 'Beginner', className: 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20' }
+    if (mins <= 9) return { label: 'Intermediate', className: 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20' }
+    return { label: 'Advanced', className: 'bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-500/20' }
+  }
+
+  const difficulty = getDifficultyBadge(article.read_time_mins)
   const articleUrl = `${BASE_URL}/${category}/${slug}`
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -370,6 +380,11 @@ export default async function ArticlePage({ params }: PageProps) {
               <span className="shrink-0 text-xs font-semibold text-on-surface-variant flex items-center gap-1.5 font-sans">
                 <Clock size={13} /> {article.read_time_mins} min read
               </span>
+              <span className={`shrink-0 text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full border font-sans flex items-center gap-1 ${difficulty.className}`}>
+                <Zap size={9} />
+                {difficulty.label}
+              </span>
+              {article.id && <LiveReaders articleId={article.id} />}
               <ShareButtons title={article.title} categorySlug={article.category.slug} slug={slug} variant="icon" />
             </div>
           </div>
@@ -395,8 +410,14 @@ export default async function ArticlePage({ params }: PageProps) {
         </aside>
 
         {/* Right Side: Article Body Renderer */}
-        <article className="max-w-article-max-width mx-auto lg:mx-0 flex-grow order-1 lg:order-2 space-y-12">
+        <article className="max-w-article-max-width mx-auto lg:mx-0 grow order-1 lg:order-2 space-y-12">
           <ArticleRenderer document={article.content} />
+          {article.id && (
+            <div className="border-t border-outline-variant/30 pt-8 space-y-3">
+              <p className="text-xs font-bold uppercase tracking-wider text-outline font-sans">What did you think?</p>
+              <Reactions articleId={article.id} />
+            </div>
+          )}
         </article>
       </div>
 

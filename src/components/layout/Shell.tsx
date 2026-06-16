@@ -10,15 +10,44 @@ interface ShellProps {
   children: React.ReactNode
 }
 
-const NAV_LINKS = [
-  { label: 'AI Tools', href: '/ai-tools', image: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=400&q=60', desc: 'Reviews & guides' },
-  { label: 'Devices', href: '/devices', image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=400&q=60', desc: 'Gadget reviews' },
-  { label: 'Career', href: '/career', image: 'https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=400&q=60', desc: 'Growth & upskilling' },
-  { label: 'Student Earning', href: '/student', image: 'https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=400&q=60', desc: 'Earn while studying' },
-  { label: 'Tech News', href: '/tech-news', image: 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=400&q=60', desc: 'India tech digest' },
-  { label: 'Tutorials', href: '/tutorials', image: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=400&q=60', desc: 'Step-by-step guides' },
-  { label: 'Tools', href: '/tools', image: 'https://images.unsplash.com/photo-1537432376769-00f5c2f4c8d2?auto=format&fit=crop&w=400&q=60', desc: 'Interactive tools' },
+const NAV_GROUPS = [
+  {
+    group: 'Learn',
+    links: [
+      { label: 'AI Tools',      href: '/ai-tools',     image: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=400&q=60', desc: 'Reviews & guides' },
+      { label: 'Tutorials',     href: '/tutorials',    image: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=400&q=60', desc: 'Step-by-step guides' },
+      { label: 'Cloud & DevOps',href: '/cloud',        image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=400&q=60', desc: 'AWS, Docker, K8s' },
+      { label: 'Open Source',   href: '/open-source',  image: 'https://images.unsplash.com/photo-1556075798-4825dfaaf498?auto=format&fit=crop&w=400&q=60', desc: 'GitHub & contributions' },
+      { label: 'Design & UI/UX',href: '/design',       image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&w=400&q=60', desc: 'Figma & design systems' },
+    ],
+  },
+  {
+    group: 'Build',
+    links: [
+      { label: 'Devices',       href: '/devices',      image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=400&q=60', desc: 'Gadget reviews' },
+      { label: 'Career',        href: '/career',       image: 'https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=400&q=60', desc: 'Growth & upskilling' },
+      { label: 'Startup',       href: '/startup',      image: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=400&q=60', desc: 'Build a startup in India' },
+      { label: 'Productivity',  href: '/productivity', image: 'https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?auto=format&fit=crop&w=400&q=60', desc: 'Tools & habits' },
+      { label: 'Cybersecurity', href: '/security',     image: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=400&q=60', desc: 'Stay safe online' },
+    ],
+  },
+  {
+    group: 'Earn',
+    links: [
+      { label: 'Student Earning',href: '/student',     image: 'https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=400&q=60', desc: 'Earn while studying' },
+      { label: 'Freelancing',   href: '/freelancing',  image: 'https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?auto=format&fit=crop&w=400&q=60', desc: 'Find clients & grow' },
+      { label: 'Finance',       href: '/finance',      image: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=400&q=60', desc: 'Invest & build wealth' },
+      { label: 'Remote Work',   href: '/remote',       image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=400&q=60', desc: 'Global remote jobs' },
+    ],
+  },
+  {
+    group: 'News',
+    links: [
+      { label: 'Tech News',     href: '/tech-news',    image: 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=400&q=60', desc: 'India tech digest' },
+    ],
+  },
 ]
+
 
 export function Shell({ children }: ShellProps) {
   const getInitialTheme = (): 'light' | 'dark' => {
@@ -127,38 +156,45 @@ export function Shell({ children }: ShellProps) {
                   </Link>
                 </div>
 
-                {/* Category grid */}
-                <nav className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 p-3">
-                  {NAV_LINKS.map((link) => (
-                    <Link
-                      key={link.href}
-                      href={link.href}
-                      onClick={() => setMenuOpen(false)}
-                      className={`group flex items-center gap-0 rounded-xl overflow-hidden border transition-all duration-150 ${
-                        isActive(link.href)
-                          ? 'border-primary/40 bg-primary/5 ring-1 ring-primary/20'
-                          : 'border-outline-variant hover:border-outline hover:bg-surface-container-low'
-                      }`}
-                    >
-                      {/* Thumbnail */}
-                      <div className="w-14 h-12 shrink-0 overflow-hidden bg-surface-variant">
-                        <img
-                          src={link.image}
-                          alt={link.label}
-                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                        />
+                {/* Grouped category menu */}
+                <nav className="p-3 space-y-3 max-h-[70vh] overflow-y-auto">
+                  {NAV_GROUPS.map((group) => (
+                    <div key={group.group}>
+                      <div className="px-2 pb-1.5 text-[9px] font-bold uppercase tracking-widest text-on-surface-variant/60">
+                        {group.group}
                       </div>
-                      {/* Text */}
-                      <div className="px-3 flex-1 min-w-0">
-                        <div className={`text-sm font-semibold truncate ${isActive(link.href) ? 'text-primary' : 'text-on-surface'}`}>
-                          {link.label}
-                        </div>
-                        <div className="text-[10px] text-on-surface-variant truncate">{link.desc}</div>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-1">
+                        {group.links.map((link) => (
+                          <Link
+                            key={link.href}
+                            href={link.href}
+                            onClick={() => setMenuOpen(false)}
+                            className={`group flex items-center gap-0 rounded-xl overflow-hidden border transition-all duration-150 ${
+                              isActive(link.href)
+                                ? 'border-primary/40 bg-primary/5 ring-1 ring-primary/20'
+                                : 'border-outline-variant hover:border-outline hover:bg-surface-container-low'
+                            }`}
+                          >
+                            <div className="w-12 h-10 shrink-0 overflow-hidden bg-surface-variant">
+                              <img
+                                src={link.image}
+                                alt={link.label}
+                                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                              />
+                            </div>
+                            <div className="px-2.5 flex-1 min-w-0">
+                              <div className={`text-xs font-semibold truncate ${isActive(link.href) ? 'text-primary' : 'text-on-surface'}`}>
+                                {link.label}
+                              </div>
+                              <div className="text-[9px] text-on-surface-variant truncate">{link.desc}</div>
+                            </div>
+                            {isActive(link.href) && (
+                              <span className="w-1 self-stretch bg-primary rounded-r-xl shrink-0" />
+                            )}
+                          </Link>
+                        ))}
                       </div>
-                      {isActive(link.href) && (
-                        <span className="w-1 self-stretch bg-primary rounded-r-xl shrink-0" />
-                      )}
-                    </Link>
+                    </div>
                   ))}
                 </nav>
 
@@ -226,13 +262,22 @@ export function Shell({ children }: ShellProps) {
 
           <div className="grid grid-cols-2 gap-10">
             <div>
-              <h5 className="text-xs font-bold text-on-surface uppercase tracking-wider mb-4">Content</h5>
+              <h5 className="text-xs font-bold text-on-surface uppercase tracking-wider mb-4">Learn</h5>
               <ul className="space-y-2.5 text-xs text-on-surface-variant">
                 <li><Link href="/ai-tools" className="hover:text-primary transition-colors">AI Tools</Link></li>
-                <li><Link href="/devices" className="hover:text-primary transition-colors">Devices & Gadgets</Link></li>
-                <li><Link href="/career" className="hover:text-primary transition-colors">Career Roadmaps</Link></li>
+                <li><Link href="/tutorials" className="hover:text-primary transition-colors">Tutorials</Link></li>
+                <li><Link href="/cloud" className="hover:text-primary transition-colors">Cloud & DevOps</Link></li>
+                <li><Link href="/open-source" className="hover:text-primary transition-colors">Open Source</Link></li>
+                <li><Link href="/design" className="hover:text-primary transition-colors">Design & UI/UX</Link></li>
+              </ul>
+            </div>
+            <div>
+              <h5 className="text-xs font-bold text-on-surface uppercase tracking-wider mb-4">Earn</h5>
+              <ul className="space-y-2.5 text-xs text-on-surface-variant">
                 <li><Link href="/student" className="hover:text-primary transition-colors">Student Earnings</Link></li>
-                <li><Link href="/tech-news" className="hover:text-primary transition-colors">Tech News</Link></li>
+                <li><Link href="/freelancing" className="hover:text-primary transition-colors">Freelancing</Link></li>
+                <li><Link href="/finance" className="hover:text-primary transition-colors">Finance</Link></li>
+                <li><Link href="/remote" className="hover:text-primary transition-colors">Remote Work</Link></li>
               </ul>
             </div>
             <div>

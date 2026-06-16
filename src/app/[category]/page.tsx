@@ -13,11 +13,21 @@ interface CategoryPageProps {
 }
 
 const MOCK_CATEGORIES = [
-  { id: 'cat-1', name: 'AI Tools', slug: 'ai-tools', description: 'AI tool reviews and guides', color: '#8B5CF6' },
-  { id: 'cat-2', name: 'Devices & Gadgets', slug: 'devices', description: 'Phone and gadget reviews for India', color: '#3B82F6' },
-  { id: 'cat-3', name: 'Career Upgrades', slug: 'career', description: 'Career growth and upskilling', color: '#10B981' },
-  { id: 'cat-4', name: 'Tech News', slug: 'tech-news', description: 'Weekly tech digest with India context', color: '#F59E0B' },
-  { id: 'cat-5', name: 'Student Earning', slug: 'student', description: 'Earning methods for Indian college students', color: '#EF4444' }
+  { id: 'cat-1',  name: 'AI Tools',        slug: 'ai-tools',     description: 'AI tool reviews and guides',                          color: '#8B5CF6' },
+  { id: 'cat-2',  name: 'Devices & Gadgets',slug: 'devices',     description: 'Phone and gadget reviews for India',                  color: '#3B82F6' },
+  { id: 'cat-3',  name: 'Career Upgrades',  slug: 'career',      description: 'Career growth and upskilling',                        color: '#10B981' },
+  { id: 'cat-4',  name: 'Tech News',        slug: 'tech-news',   description: 'Weekly tech digest with India context',               color: '#F59E0B' },
+  { id: 'cat-5',  name: 'Student Earning',  slug: 'student',     description: 'Earning methods for Indian college students',         color: '#EF4444' },
+  { id: 'cat-6',  name: 'Tutorials',        slug: 'tutorials',   description: 'Step-by-step technical guides',                       color: '#0EA5E9' },
+  { id: 'cat-7',  name: 'Freelancing',      slug: 'freelancing', description: 'Build and grow a freelance business',                 color: '#EC4899' },
+  { id: 'cat-8',  name: 'Startup',          slug: 'startup',     description: 'Build a startup in India',                            color: '#F97316' },
+  { id: 'cat-9',  name: 'Finance',          slug: 'finance',     description: 'Personal finance for tech professionals',             color: '#14B8A6' },
+  { id: 'cat-10', name: 'Open Source',      slug: 'open-source', description: 'GitHub, open source contributions',                  color: '#6366F1' },
+  { id: 'cat-11', name: 'Productivity',     slug: 'productivity',description: 'Tools and habits for peak performance',               color: '#84CC16' },
+  { id: 'cat-12', name: 'Cybersecurity',    slug: 'security',    description: 'Cybersecurity and online safety',                     color: '#F43F5E' },
+  { id: 'cat-13', name: 'Design & UI/UX',   slug: 'design',      description: 'UI/UX design and Figma tutorials',                   color: '#A78BFA' },
+  { id: 'cat-14', name: 'Cloud & DevOps',   slug: 'cloud',       description: 'AWS, Docker, Kubernetes tutorials',                  color: '#FB923C' },
+  { id: 'cat-15', name: 'Remote Work',      slug: 'remote',      description: 'Find and thrive in remote tech roles',               color: '#2DD4BF' },
 ]
 
 const MOCK_ARTICLES = [

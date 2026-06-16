@@ -2,6 +2,10 @@
 
 # Local planning docs
 platform-plan-v2.md
+platform-expansion.md
+
+# Article content
+/content
 
 # dependencies
 /node_modules

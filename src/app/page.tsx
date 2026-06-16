@@ -2,7 +2,8 @@ import { createClient } from '@/lib/supabase/server'
 import { NewsletterForm } from '@/components/layout/NewsletterForm'
 import {
   ArrowUpRight, Clock, BookOpen, Cpu, Smartphone, TrendingUp,
-  Newspaper, GraduationCap, Flame, Search
+  Newspaper, GraduationCap, Flame, Search,
+  Briefcase, Rocket, Banknote, GitBranch, CheckSquare, Shield, Palette, Cloud, Globe
 } from 'lucide-react'
 import { MarqueeStrip } from '@/components/layout/MarqueeStrip'
 import Link from 'next/link'
@@ -33,6 +34,46 @@ const CATEGORY_META: Record<string, { icon: React.ComponentType<any>; color: str
   'student': {
     icon: GraduationCap, color: '#EF4444',
     image: 'https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=600&q=80',
+  },
+  'tutorials': {
+    icon: BookOpen, color: '#0EA5E9',
+    image: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=600&q=80',
+  },
+  'freelancing': {
+    icon: Briefcase, color: '#EC4899',
+    image: 'https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?auto=format&fit=crop&w=600&q=80',
+  },
+  'startup': {
+    icon: Rocket, color: '#F97316',
+    image: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=600&q=80',
+  },
+  'finance': {
+    icon: Banknote, color: '#14B8A6',
+    image: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=600&q=80',
+  },
+  'open-source': {
+    icon: GitBranch, color: '#6366F1',
+    image: 'https://images.unsplash.com/photo-1556075798-4825dfaaf498?auto=format&fit=crop&w=600&q=80',
+  },
+  'productivity': {
+    icon: CheckSquare, color: '#84CC16',
+    image: 'https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?auto=format&fit=crop&w=600&q=80',
+  },
+  'security': {
+    icon: Shield, color: '#F43F5E',
+    image: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=600&q=80',
+  },
+  'design': {
+    icon: Palette, color: '#A78BFA',
+    image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&w=600&q=80',
+  },
+  'cloud': {
+    icon: Cloud, color: '#FB923C',
+    image: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=600&q=80',
+  },
+  'remote': {
+    icon: Globe, color: '#2DD4BF',
+    image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=600&q=80',
   },
 }
 
