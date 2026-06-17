@@ -11,7 +11,10 @@ import { Reactions } from './Reactions'
 import { LiveReaders } from './LiveReaders'
 import { Clock, Calendar, ChevronRight, ArrowUpRight } from 'lucide-react'
 import Link from 'next/link'
+import Image from 'next/image'
 import type { Metadata } from 'next'
+
+export const revalidate = 3600
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://expliq.in'
 
@@ -427,10 +430,13 @@ export default async function ArticlePage({ params }: PageProps) {
 
         <div className="w-full min-h-64 md:aspect-3/1 relative rounded-lg overflow-hidden shadow-2xl border border-zinc-800/20 dark:border-outline-variant/30 bg-surface-dim group">
           {/* Cover Image */}
-          <img
+          <Image
             src={article.cover_image_url}
             alt={article.title}
-            className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.01] transition-transform duration-1000 z-0"
+            fill
+            priority
+            sizes="(max-width: 768px) 100vw, (max-width: 1280px) 90vw, 1280px"
+            className="object-cover group-hover:scale-[1.01] transition-transform duration-1000 z-0"
           />
           {/* Deep Editorial Dark Gradient Overlay */}
           <div className="absolute inset-0 bg-linear-to-t from-zinc-950 via-zinc-950/40 to-transparent z-10" />
@@ -521,11 +527,13 @@ export default async function ArticlePage({ params }: PageProps) {
                 href={`/${rel.category.slug}/${rel.slug}`}
                 className="group border border-outline-variant rounded-lg overflow-hidden bg-surface-container-lowest hover:border-outline hover:shadow-md transition-all duration-200 flex flex-col"
               >
-                <div className="aspect-video overflow-hidden bg-surface-variant">
-                  <img
+                <div className="aspect-video overflow-hidden bg-surface-variant relative">
+                  <Image
                     src={rel.cover_image_url}
                     alt={rel.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    className="object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
                 <div className="p-4 flex flex-col gap-2.5 grow">
