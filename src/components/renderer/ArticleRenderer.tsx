@@ -314,7 +314,7 @@ export function ArticleRenderer({ document }: ArticleRendererProps) {
                   {(block.items || []).map((item, idx) => (
                     <li key={idx} className="flex gap-3 items-start text-sm md:text-base text-on-surface/85">
                       <span className="mt-1 w-2 h-2 rounded-full bg-emerald-500 shrink-0" />
-                      <span>{item}</span>
+                      <span dangerouslySetInnerHTML={{ __html: item || '' }} />
                     </li>
                   ))}
                 </ul>
@@ -348,9 +348,9 @@ export function ArticleRenderer({ document }: ArticleRendererProps) {
                         <div className="w-0.5 h-full min-h-8 bg-primary/20 my-1" />
                       )}
                     </div>
-                    <p className="text-base md:text-lg text-on-surface/85 leading-relaxed pb-6 pt-1">
-                      {item}
-                    </p>
+                    <p className="text-base md:text-lg text-on-surface/85 leading-relaxed pb-6 pt-1"
+                      dangerouslySetInnerHTML={{ __html: item || '' }}
+                    />
                   </div>
                 ))}
               </div>
