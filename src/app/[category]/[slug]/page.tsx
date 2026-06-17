@@ -126,6 +126,99 @@ const MOCK_ARTICLE_DETAILS: Record<string, any> = {
   }
 }
 
+function normalizeContent(content: any): { version: number; blocks: any[] } {
+  if (!content) return { version: 1, blocks: [] }
+  const raw = content.blocks || []
+  const blocks: any[] = []
+
+  raw.forEach((block: any, idx: number) => {
+    const id = block.id || `block-${idx}`
+    // Old format — fields are directly on the block (no data wrapper)
+    if (!block.data) {
+      blocks.push({ id, ...block })
+      return
+    }
+    const d = block.data
+    const listStyleMap: Record<string, string> = { unordered: 'bullet', ordered: 'numbered', checklist: 'checklist' }
+
+    switch (block.type) {
+      case 'heading':
+        blocks.push({ id, type: 'heading', level: d.level ?? 2, content: d.text || '' })
+        break
+      case 'paragraph':
+        blocks.push({ id, type: 'paragraph', content: d.text || '' })
+        break
+      case 'code':
+        blocks.push({ id, type: 'code', language: d.language || 'text', filename: d.filename, content: d.code || '' })
+        break
+      case 'callout':
+        blocks.push({ id, type: 'callout', style: d.type || d.style || 'info', title: d.title, content: d.text || d.content || '' })
+        break
+      case 'table':
+        blocks.push({ id, type: 'table', headers: d.headers || [], rows: d.rows || [], caption: d.caption })
+        break
+      case 'list':
+        blocks.push({ id, type: 'list', style: listStyleMap[d.style] || d.style || 'bullet', items: d.items || [] })
+        break
+      case 'quote':
+        blocks.push({ id, type: 'quote', content: d.text || d.content || '', attribution: d.attribution || d.author })
+        break
+      case 'pull-quote':
+        blocks.push({ id, type: 'pull-quote', content: d.text || d.content || '', attribution: d.attribution })
+        break
+      case 'steps': {
+        const stepItems = d.steps || d.items || []
+        blocks.push({
+          id, type: 'steps',
+          items: stepItems.map((s: any) =>
+            typeof s === 'string' ? s : `<strong>${s.title || ''}</strong>${s.description ? ': ' + s.description : ''}`
+          )
+        })
+        break
+      }
+      case 'stat': {
+        const stats = d.stats || []
+        if (stats.length > 0) {
+          stats.forEach((s: any, i: number) => {
+            blocks.push({ id: `${id}-${i}`, type: 'stat', value: s.value || '', label: s.label || '', context: s.context })
+          })
+        } else {
+          blocks.push({ id, type: 'stat', value: d.value || '', label: d.label || '', context: d.context })
+        }
+        break
+      }
+      case 'key-takeaways':
+        blocks.push({ id, type: 'key-takeaways', items: d.items || [] })
+        break
+      case 'faq':
+        blocks.push({ id, type: 'faq', items: d.items || [] })
+        break
+      case 'cta':
+        blocks.push({ id, type: 'cta', heading: d.heading || d.title || '', subtext: d.subtext || d.description, buttonLabel: d.buttonLabel || d.cta || 'Learn More', buttonUrl: d.buttonUrl || d.url || '#', style: d.style || 'primary' })
+        break
+      case 'image':
+        blocks.push({ id, type: 'image', url: d.url || d.src || '', alt: d.alt || '', caption: d.caption, alignment: d.alignment })
+        break
+      case 'affiliate':
+        blocks.push({ id, type: 'affiliate', product_name: d.product_name || d.name || '', description: d.description || '', price: d.price, badge: d.badge, cta_text: d.cta_text || d.cta || 'Learn More', affiliate_url: d.affiliate_url || d.url || '#' })
+        break
+      case 'divider':
+        blocks.push({ id, type: 'divider', style: d.style })
+        break
+      case 'newsletter':
+        blocks.push({ id, type: 'newsletter', heading: d.heading || '', subtext: d.subtext })
+        break
+      case 'embed':
+        blocks.push({ id, type: 'embed', provider: d.provider || 'youtube', embed_id: d.embed_id || d.id || '', caption: d.caption })
+        break
+      default:
+        blocks.push({ id, ...block, ...d })
+    }
+  })
+
+  return { version: content.version || 1, blocks }
+}
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { category, slug } = await params
   const supabase = await createClient()
@@ -209,7 +302,7 @@ export default async function ArticlePage({ params }: PageProps) {
         published_at: data.published_at
           ? new Date(data.published_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })
           : 'Draft',
-        content: data.content
+        content: normalizeContent(data.content)
       }
     }
   } catch {
@@ -400,7 +493,7 @@ export default async function ArticlePage({ params }: PageProps) {
 
         {/* Right Side: Article Body Renderer */}
         <article className="max-w-article-max-width mx-auto lg:mx-0 grow order-1 lg:order-2 space-y-12">
-          <ArticleRenderer document={article.content ?? { version: 1, blocks: [] }} />
+          <ArticleRenderer document={normalizeContent(article.content)} />
           {article.id && (
             <div className="border-t border-outline-variant/30 pt-8 space-y-3">
               <p className="text-xs font-bold uppercase tracking-wider text-outline font-sans">What did you think?</p>
