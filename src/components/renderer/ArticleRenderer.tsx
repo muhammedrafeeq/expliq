@@ -162,7 +162,7 @@ export function ArticleRenderer({ document }: ArticleRendererProps) {
             const ListTag = block.style === 'numbered' ? 'ol' : 'ul'
             return (
               <ListTag key={block.id} className="pl-6 my-5 space-y-2 list-outside font-sans text-base md:text-lg">
-                {block.items.map((item, idx) => (
+                {(block.items || []).map((item, idx) => (
                   <li
                     key={idx}
                     className={`text-on-surface/85 leading-relaxed ${
@@ -245,7 +245,7 @@ export function ArticleRenderer({ document }: ArticleRendererProps) {
                   <table className="min-w-full divide-y divide-outline-variant/30 border-collapse">
                     <thead>
                       <tr className="bg-surface-container-low/60">
-                        {block.headers.map((header, colIdx) => (
+                        {(block.headers || []).map((header, colIdx) => (
                           <th
                             key={colIdx}
                             className="px-5 py-4 text-left font-serif font-bold text-xs tracking-wider uppercase text-on-surface/80"
@@ -256,7 +256,7 @@ export function ArticleRenderer({ document }: ArticleRendererProps) {
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-outline-variant/20">
-                      {block.rows.map((row, rowIdx) => (
+                      {(block.rows || []).map((row, rowIdx) => (
                         <tr key={rowIdx} className="hover:bg-primary-fixed/5 transition-colors duration-150">
                           {row.map((cell, colIdx) => (
                             <td key={colIdx} className="px-5 py-3.5 text-sm font-sans text-on-surface-variant">
@@ -311,7 +311,7 @@ export function ArticleRenderer({ document }: ArticleRendererProps) {
                   Key Takeaways
                 </p>
                 <ul className="space-y-2.5">
-                  {block.items.map((item, idx) => (
+                  {(block.items || []).map((item, idx) => (
                     <li key={idx} className="flex gap-3 items-start text-sm md:text-base text-on-surface/85">
                       <span className="mt-1 w-2 h-2 rounded-full bg-emerald-500 shrink-0" />
                       <span>{item}</span>
@@ -338,13 +338,13 @@ export function ArticleRenderer({ document }: ArticleRendererProps) {
           case 'steps':
             return (
               <div key={block.id} className="my-8 space-y-0">
-                {block.items.map((item, idx) => (
+                {(block.items || []).map((item, idx) => (
                   <div key={idx} className="flex gap-4 items-start">
                     <div className="flex flex-col items-center shrink-0">
                       <div className="w-8 h-8 rounded-full bg-primary text-on-primary text-sm font-bold flex items-center justify-center z-10">
                         {idx + 1}
                       </div>
-                      {idx < block.items.length - 1 && (
+                      {idx < (block.items || []).length - 1 && (
                         <div className="w-0.5 h-full min-h-8 bg-primary/20 my-1" />
                       )}
                     </div>
@@ -359,7 +359,7 @@ export function ArticleRenderer({ document }: ArticleRendererProps) {
           case 'faq':
             return (
               <div key={block.id} className="my-8 divide-y divide-outline-variant/30 border border-outline-variant/30 rounded-xl overflow-hidden">
-                {block.items.map((faqItem, idx) => (
+                {(block.items || []).map((faqItem, idx) => (
                   <div key={idx} className="px-6 py-5 space-y-2 bg-surface-container-lowest hover:bg-primary-fixed/5 transition-colors">
                     <p className="font-bold text-on-surface text-base">{faqItem.question}</p>
                     <p className="text-sm md:text-base text-on-surface-variant leading-relaxed">{faqItem.answer}</p>
