@@ -179,12 +179,8 @@ function normalizeContent(content: any): { version: number; blocks: any[] } {
         break
       }
       case 'stat': {
-        const stats = d.stats || []
-        if (stats.length > 0) {
-          stats.forEach((s: any, i: number) => {
-            blocks.push({ id: `${id}-${i}`, type: 'stat', value: s.value || '', label: s.label || '', context: s.context })
-          })
-        } else {
+        // Skip multi-stat card arrays (new format intro cards)
+        if (!d.stats) {
           blocks.push({ id, type: 'stat', value: d.value || '', label: d.label || '', context: d.context })
         }
         break
