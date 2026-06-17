@@ -32,7 +32,7 @@ export function ArticleRenderer({ document }: ArticleRendererProps) {
         switch (block.type) {
           case 'heading': {
             const HeadingTag = `h${block.level}` as 'h2' | 'h3' | 'h4'
-            const cleanId = block.content.replace(/<[^>]*>/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-')
+            const cleanId = (block.content || '').replace(/<[^>]*>/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-')
             return (
               <HeadingTag
                 key={block.id}
@@ -44,7 +44,7 @@ export function ArticleRenderer({ document }: ArticleRendererProps) {
                     ? 'text-xl md:text-2xl font-bold mt-10 mb-4'
                     : 'text-lg font-bold mt-8 mb-3'
                 }`}
-                dangerouslySetInnerHTML={{ __html: block.content }}
+                dangerouslySetInnerHTML={{ __html: block.content || '' }}
               />
             )
           }
@@ -54,7 +54,7 @@ export function ArticleRenderer({ document }: ArticleRendererProps) {
               <p
                 key={block.id}
                 className="text-base md:text-lg font-sans text-on-surface/85 leading-relaxed selection:bg-primary-fixed-dim selection:text-on-primary-fixed"
-                dangerouslySetInnerHTML={{ __html: block.content }}
+                dangerouslySetInnerHTML={{ __html: block.content || '' }}
               />
             )
 
