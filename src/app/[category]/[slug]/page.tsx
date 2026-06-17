@@ -130,7 +130,10 @@ function normalizeContent(content: any): { version: number; blocks: any[] } {
   if (!content) return { version: 1, blocks: [] }
   // When the whole article object was stored instead of just the content field
   const doc = content.blocks ? content : (content.content ?? content)
-  const raw = doc.blocks || []
+  // Strip leading stat blocks (intro cards)
+  const allBlocks = doc.blocks || []
+  const firstNonStat = allBlocks.findIndex((b: any) => b.type !== 'stat')
+  const raw = firstNonStat <= 0 ? allBlocks : allBlocks.slice(firstNonStat)
   const blocks: any[] = []
 
   raw.forEach((block: any, idx: number) => {
@@ -179,8 +182,12 @@ function normalizeContent(content: any): { version: number; blocks: any[] } {
         break
       }
       case 'stat': {
-        // Skip multi-stat card arrays (new format intro cards)
-        if (!d.stats) {
+        const stats = d.stats || []
+        if (stats.length > 0) {
+          stats.forEach((s: any, i: number) => {
+            blocks.push({ id: `${id}-${i}`, type: 'stat', value: s.value || '', label: s.label || '', context: s.context })
+          })
+        } else {
           blocks.push({ id, type: 'stat', value: d.value || '', label: d.label || '', context: d.context })
         }
         break
