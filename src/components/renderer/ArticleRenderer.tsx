@@ -174,7 +174,7 @@ export function ArticleRenderer({ document }: ArticleRendererProps) {
                     }`}
                   >
                     {block.style === 'checklist' && <span className="text-primary font-bold">✓</span>}
-                    <span dangerouslySetInnerHTML={{ __html: item }} />
+                    <span dangerouslySetInnerHTML={{ __html: item || '' }} />
                   </li>
                 ))}
               </ListTag>
