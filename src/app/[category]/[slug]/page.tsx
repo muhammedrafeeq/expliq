@@ -128,7 +128,9 @@ const MOCK_ARTICLE_DETAILS: Record<string, any> = {
 
 function normalizeContent(content: any): { version: number; blocks: any[] } {
   if (!content) return { version: 1, blocks: [] }
-  const raw = content.blocks || []
+  // When the whole article object was stored instead of just the content field
+  const doc = content.blocks ? content : (content.content ?? content)
+  const raw = doc.blocks || []
   const blocks: any[] = []
 
   raw.forEach((block: any, idx: number) => {
