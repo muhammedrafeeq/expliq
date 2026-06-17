@@ -304,7 +304,7 @@ export default async function ArticlePage({ params }: PageProps) {
     headline: article.title,
     description: article.excerpt,
     image: article.cover_image_url,
-    datePublished: article.published_at ? new Date(article.published_at).toISOString() : undefined,
+    datePublished: (() => { try { const d = new Date(article.published_at); return isNaN(d.getTime()) ? undefined : d.toISOString() } catch { return undefined } })(),
     author: { '@type': 'Person', name: article.author.name },
     publisher: { '@type': 'Organization', name: 'Expliq', url: BASE_URL },
     mainEntityOfPage: { '@type': 'WebPage', '@id': articleUrl },
