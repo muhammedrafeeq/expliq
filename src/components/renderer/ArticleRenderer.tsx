@@ -31,7 +31,7 @@ export function ArticleRenderer({ document }: ArticleRendererProps) {
       {blocks.map((block) => {
         switch (block.type) {
           case 'heading': {
-            const HeadingTag = `h${block.level}` as 'h2' | 'h3' | 'h4'
+            const HeadingTag = `h${block.level ?? 2}` as 'h2' | 'h3' | 'h4'
             const cleanId = (block.content || '').replace(/<[^>]*>/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-')
             return (
               <HeadingTag
